@@ -10,7 +10,7 @@ export function ThemeToggle() {
 	}
 
 	return (
-		<Button aria-label="Toggle theme" onClick={toggleTheme}>
+		<Button aria-label="Toggle theme" onClick={toggleTheme} variant="ghost">
 			{theme === "dark" ? <Moon /> : <Sun />}
 		</Button>
 	);

@@ -5,8 +5,14 @@ import { ThemeToggle } from "@/features/color-theme/theme-toggle";
 export default function Header() {
 	return (
 		<header>
-			<nav>
-				<Link to="/">Gateling Solutions</Link>
+			<nav className="flex items-center justify-between gap-4 p-4">
+				<Link to="/">
+					<img
+						alt="Gateling Solutions Logo"
+						className="size-8"
+						src="G Logo.png"
+					/>
+				</Link>
 				<ThemeToggle />
 			</nav>
 		</header>
