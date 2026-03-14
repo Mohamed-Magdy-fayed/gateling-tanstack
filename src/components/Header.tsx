@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { ThemeToggle } from "@/features/color-theme/theme-toggle";
+import { LanguageSwitcher } from "@/features/i18n/language-switcher";
 
 export default function Header() {
 	return (
@@ -14,6 +15,7 @@ export default function Header() {
 					/>
 				</Link>
 				<ThemeToggle />
+				<LanguageSwitcher />
 			</nav>
 		</header>
 	);

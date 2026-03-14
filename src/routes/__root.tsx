@@ -8,6 +8,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { getThemeServerFn } from "@/features/color-theme/theme";
+import { getLocaleCookie } from "@/features/i18n/i18n-cookies";
 import { Providers } from "@/features/providers";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 import Footer from "../components/Footer";
@@ -21,7 +22,10 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	loader: () => getThemeServerFn(),
+	loader: async () => ({
+		theme: await getThemeServerFn(),
+		locale: await getLocaleCookie(),
+	}),
 	head: () => ({
 		meta: [
 			{
@@ -46,17 +50,22 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const theme = Route.useLoaderData();
+	const { theme, locale } = Route.useLoaderData();
 
 	return (
-		<html className={theme} lang="en" suppressHydrationWarning>
+		<html
+			className={theme}
+			dir={locale === "ar" ? "rtl" : "ltr"}
+			lang={locale}
+			suppressHydrationWarning
+		>
 			<head>
 				<HeadContent />
 			</head>
 			<body
 				className={`wrap-anywhere flex min-h-screen flex-col font-sans antialiased`}
 			>
-				<Providers theme={theme}>
+				<Providers locale={locale} theme={theme}>
 					<Header />
 					<main className="flex-1">{children}</main>
 					<Footer />
