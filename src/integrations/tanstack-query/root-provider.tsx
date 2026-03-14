@@ -1,7 +1,16 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchStreamLink } from "@trpc/client";
+import {
+	MutationCache,
+	QueryClient,
+	QueryClientProvider,
+} from "@tanstack/react-query";
+import {
+	createTRPCClient,
+	httpBatchStreamLink,
+	loggerLink,
+} from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { ReactNode } from "react";
+import { toast } from "sonner";
 import superjson from "superjson";
 import { TRPCProvider } from "@/integrations/trpc/react";
 import type { TRPCRouter } from "@/integrations/trpc/router";
@@ -36,6 +45,12 @@ export function getContext() {
 	}
 
 	const queryClient = new QueryClient({
+		mutationCache: new MutationCache({
+			onError: (error, _variables, _ctx, mutation) => {
+				if (mutation.meta?.hideErrorToast) return;
+				toast.error(error.message);
+			},
+		}),
 		defaultOptions: {
 			dehydrate: { serializeData: superjson.serialize },
 			hydrate: { deserializeData: superjson.deserialize },

@@ -11,4 +11,5 @@ export default {
 		enum: { hobby: { runner: "runner", developer: "developer" } },
 	}),
 	appName: "Gateling Example",
+	error: "An error occurred {error}. Please try again later.",
 } as const satisfies LanguageMessages;

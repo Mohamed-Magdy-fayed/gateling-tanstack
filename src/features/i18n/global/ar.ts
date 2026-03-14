@@ -11,4 +11,5 @@ export default {
 		enum: { hobby: { runner: "عداء", developer: "مطور" } },
 	}),
 	appName: "مثال جاتيلينج",
+	error: "حدث خطأ {error}. يرجى المحاولة مرة أخرى لاحقًا.",
 } as const satisfies LanguageMessages;
